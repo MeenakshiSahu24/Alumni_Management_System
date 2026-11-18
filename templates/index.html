@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Dashboard – Alumni MS{% endblock %}
+{% block content %}
+<h4 class="mb-4 fw-bold">Dashboard</h4>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card stat-card border-primary p-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="text-muted small">Total Alumni</div>
+          <div class="fs-2 fw-bold text-primary">{{ total_alumni }}</div>
+        </div>
+        <i class="bi bi-people-fill fs-1 text-primary opacity-25"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card border-success p-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="text-muted small">Currently Employed</div>
+          <div class="fs-2 fw-bold text-success">{{ employed }}</div>
+        </div>
+        <i class="bi bi-briefcase-fill fs-1 text-success opacity-25"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card border-warning p-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="text-muted small">Mentors Available</div>
+          <div class="fs-2 fw-bold text-warning">{{ mentors }}</div>
+        </div>
+        <i class="bi bi-person-check-fill fs-1 text-warning opacity-25"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card p-4">
+  <h6 class="fw-semibold mb-3">Alumni by Batch Year</h6>
+  {% if batch_stats %}
+  <table class="table table-hover table-sm">
+    <thead class="table-light">
+      <tr><th>Batch Year</th><th>Count</th></tr>
+    </thead>
+    <tbody>
+      {% for row in batch_stats %}
+      <tr><td>{{ row.batch_year }}</td><td>{{ row.count }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-muted">No data yet. <a href="{{ url_for('add_alumni') }}">Register the first alumni →</a></p>
+  {% endif %}
+</div>
+{% endblock %}

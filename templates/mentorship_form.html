@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Add Mentor{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center mb-4 gap-2">
+  <a href="{{ url_for('list_mentorship') }}" class="btn btn-sm btn-outline-secondary">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+  <h4 class="fw-bold mb-0">Register as Mentor</h4>
+</div>
+
+<div class="card p-4" style="max-width:500px;">
+  <form method="POST">
+    <div class="mb-3">
+      <label class="form-label">Alumni (Mentor) *</label>
+      <select name="mentor_id" class="form-select" required>
+        <option value="">— Select —</option>
+        {% for a in alumni_list %}
+        <option value="{{ a.id }}">{{ a.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Topic / Domain *</label>
+      <input type="text" name="topic" class="form-control"
+             placeholder="e.g. Machine Learning, Web Dev" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Availability</label>
+      <select name="availability" class="form-select">
+        <option value="">— Select —</option>
+        <option>Weekdays</option>
+        <option>Weekends</option>
+        <option>Evenings</option>
+        <option>Flexible</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Register Mentor</button>
+  </form>
+</div>
+{% endblock %}

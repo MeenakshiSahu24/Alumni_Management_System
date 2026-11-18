@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Alumni{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center mb-4 gap-2">
+  <a href="{{ url_for('list_alumni') }}" class="btn btn-sm btn-outline-secondary">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+  <h4 class="fw-bold mb-0">{{ action }} Alumni</h4>
+</div>
+
+<div class="card p-4" style="max-width:500px;">
+  <form method="POST">
+    <div class="mb-3">
+      <label class="form-label">Full Name *</label>
+      <input type="text" name="name" class="form-control"
+             value="{{ alumni.name if alumni else '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email *</label>
+      <input type="email" name="email" class="form-control"
+             value="{{ alumni.email if alumni else '' }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Phone</label>
+      <input type="text" name="phone" class="form-control"
+             value="{{ alumni.phone if alumni else '' }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Batch Year</label>
+      <input type="number" name="batch_year" class="form-control" min="1990" max="2099"
+             value="{{ alumni.batch_year if alumni else '' }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Course</label>
+      <select name="course" class="form-select">
+        {% for c in ['MCA','MBA','M.Sc','B.Sc','Other'] %}
+        <option value="{{ c }}" {{ 'selected' if alumni and alumni.course==c else '' }}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">{{ action }} Alumni</button>
+  </form>
+</div>
+{% endblock %}

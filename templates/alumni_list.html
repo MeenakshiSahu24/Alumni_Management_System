@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Alumni List{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold mb-0">Alumni</h4>
+  <a href="{{ url_for('add_alumni') }}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>Register Alumni
+  </a>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>#</th><th>Name</th><th>Email</th><th>Phone</th>
+          <th>Batch</th><th>Course</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in alumni %}
+        <tr>
+          <td>{{ a.id }}</td>
+          <td>{{ a.name }}</td>
+          <td>{{ a.email }}</td>
+          <td>{{ a.phone or '—' }}</td>
+          <td>{{ a.batch_year or '—' }}</td>
+          <td>{{ a.course or '—' }}</td>
+          <td>
+            <a href="{{ url_for('edit_alumni', alumni_id=a.id) }}" class="btn btn-sm btn-outline-secondary">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <a href="{{ url_for('delete_alumni', alumni_id=a.id) }}"
+               class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('Delete this alumni?')">
+              <i class="bi bi-trash"></i>
+            </a>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center text-muted py-4">No alumni registered yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

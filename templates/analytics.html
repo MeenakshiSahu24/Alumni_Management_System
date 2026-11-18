@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Analytics{% endblock %}
+{% block content %}
+<h4 class="fw-bold mb-4">Placement Analytics</h4>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h6 class="fw-semibold mb-3">Top Hiring Companies</h6>
+      {% if top_companies %}
+      <table class="table table-sm table-hover">
+        <thead class="table-light"><tr><th>Company</th><th>Hires</th></tr></thead>
+        <tbody>
+          {% for c in top_companies %}
+          <tr>
+            <td>{{ c.company }}</td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                {{ c.count }}
+                <div class="progress flex-grow-1" style="height:6px;">
+                  <div class="progress-bar bg-primary" style="width:{{ (c.count / top_companies[0].count * 100)|int }}%"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="text-muted">No employment data yet.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h6 class="fw-semibold mb-3">Placement % by Batch</h6>
+      {% if placement_stats %}
+      <table class="table table-sm table-hover">
+        <thead class="table-light"><tr><th>Batch</th><th>Total</th><th>Placed</th><th>%</th></tr></thead>
+        <tbody>
+          {% for row in placement_stats %}
+          {% set pct = ((row.placed / row.total) * 100)|int if row.total > 0 else 0 %}
+          <tr>
+            <td>{{ row.batch_year }}</td>
+            <td>{{ row.total }}</td>
+            <td>{{ row.placed }}</td>
+            <td>
+              <span class="badge {% if pct >= 70 %}bg-success{% elif pct >= 40 %}bg-warning{% else %}bg-danger{% endif %}">
+                {{ pct }}%
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="text-muted">No batch data available.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
